@@ -8,5 +8,11 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "buildOptions": {
+    "formats": [
+      "esm-bundler",
+      "cjs"
+    ]
+  }
 }
