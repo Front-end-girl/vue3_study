@@ -19,5 +19,5 @@ let packageDir = path.resolve(packagesDir, process.env.TARGET);
 const resolve = (p) => path.resolve(packageDir, p); // 获取针对路径下的某个文件
 
 // require 获取某个路径下的内容
-const pkg = require(resolve("package.json"));
-console.log(packageDir, packagesDir);
+// const pkg = require(resolve("package.json"));
+// console.log(packageDir, packagesDir);

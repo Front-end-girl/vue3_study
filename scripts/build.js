@@ -9,11 +9,14 @@ const dirs = readdirSync("packages").filter((p) => {
 });
 
 console.log(dirs);
-// 并行打包
+// （2）并行打包，对应的分包执行命令行
 async function build(target) {
+  console.log(target);
   // 注意execs -c 执行rollup配置，环境变量 -env
   await execa("rollup", ["-c", "--environment", `TARGET:${target}`], {
     stdio: "inherit", // 子进程的执行可以再父包中输出
+    // 'inherit': 将子进程的标准输入、输出或错误流直接连接到父进程的对应流。
+    // 这样可以使子进程的输出和错误信息直接显示在父进程的控制台上。
   }); // rollup 打包 执行里面配置
 }
 async function runParaller(dirs, build) {
