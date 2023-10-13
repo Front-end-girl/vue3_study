@@ -53,4 +53,28 @@ const outputOptions = {
   },
 };
 
-const options= pkg.
+const options = pkg.buildOptions;
+
+function createConfig(format, output) {
+  output.name = options.name;
+  output.sourcemap = true;
+
+  // 生成rollup配置
+  return {
+    input: resolve("src/index.ts"), // 导入
+    output,
+    plugins: [
+      json(),
+      ts({
+        // 解析ts
+        tsconfig: path.resolve(__dirname, "tsconfig.json"),
+      }),
+      resolvePlugin(), // 解析 第三方 插件
+    ],
+  };
+}
+
+// rollup 需要导出一个配置 formats 配置的文件 根据input 和output
+export default options.formats.map((format) =>
+  createConfig(format, outputOptions[format])
+);
