@@ -1,6 +1,9 @@
-import { a as c } from "@vue/shared";
+// 入口文件
 
-let a = 1;
-let b = 2;
-
-export { a, b, c };
+export {
+    reactive,
+    shallowReactive,
+    readonly,
+    shallowReadonly,
+  } from "../../reactivity/src/reactive";
+  
