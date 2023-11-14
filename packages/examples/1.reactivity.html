@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="../reactivity/dist/reactivity.global.js"></script>
+    <script>
+      let { reactive, shallowReactive, readonly, shallowReadonly } =
+        VueReactivity;
+      const state = shallowReadonly({
+        a: 1,
+        list: { b: 3 },
+      });
+      state.a = 5;
+      console.log(state.list);
+      //   console.log(state.list);
+    </script>
+  </body>
+</html>

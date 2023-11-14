@@ -1,8 +1,10 @@
 import { isObject } from "@vue/shared";
-let reactiveHandlers = {};
-let shallowReactiveHandlers = {};
-let readonlyHandlers = {};
-let shallowReadonlyHandlers = {};
+import {
+  reactiveHandlers,
+  shallowReactiveHandlers,
+  readonlyHandlers,
+  shallowReadonlyHandlers,
+} from "./baseHandlers";
 
 export function reactive(target: object) {
   return createReactive(target, false, reactiveHandlers);
