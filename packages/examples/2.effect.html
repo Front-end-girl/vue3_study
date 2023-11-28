@@ -14,21 +14,22 @@
       effect(() => {
         // effect1
         // 默认执行 获取代理的数据 ref proxy 执行get方法 收集effect
-        app.innerHTML = state.list; // get
+        // app.innerHTML = state.list;
         // effect(() => {
         //   // effect2
         //   state.a;
         // });
         // state.a = 2; // effect1
-
+        app.innerHTML = state.list[2];
         // setTimeout(() => {
         //   app.innerHTML = state.list[2];
         // }, 1000);
         // state.a = 1;
       });
       setTimeout(() => {
-        state.list.length = 1; //set
-        // state.list[4] = 100;
+        // state.list.length = 1; //set
+        // console.log(state.list);
+        state.list[4] = 100; // 源码实现一下
       }, 1000);
 
       // 总结：effect

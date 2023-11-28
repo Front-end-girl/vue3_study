@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="../reactivity/dist/reactivity.global.js"></script>
+    <script>
+      let { computed, ref } = VueReactivity;
+      let age = ref(10);
+      const myAge = computed(() => {
+        console.log("缓存机制");
+        return age.value + 10;
+      });
+      console.log(myAge);
+      console.log(myAge.value);
+      console.log(myAge.value);
+      let name = computed({
+        get: () => {
+          return age.value;
+        },
+        set: () => {
+          return age.value + 1000;
+        },
+      });
+      setTimeout(() => {
+        // age.value = 50;
+        // console.log(myAge.value);
+        name.value = 1000; // 修改computed值
+      }, 1000);
+    </script>
+  </body>
+</html>

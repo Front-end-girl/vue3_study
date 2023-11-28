@@ -23,3 +23,4 @@ export const hasOwn = (
 export const hasChanged = (value: any, oldValue: any): boolean =>
   !Object.is(value, oldValue);
 //测试删除二次测试
+export const isSymbol = (val: unknown): val is symbol => typeof val === 'symbol'

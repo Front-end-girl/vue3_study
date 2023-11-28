@@ -23,7 +23,7 @@ function createReactEffect(fn, options) {
       try {
         activeEffect = effect;
         effectStack.push(effect);
-        fn(); //执行用户的方法 // set 修改执行回调方法
+        return fn(); //执行用户的方法 // set 修改执行回调方法
       } finally {
         effectStack.pop();
         activeEffect = effectStack[effectStack.length - 1];
@@ -67,10 +67,12 @@ export function Track(target, type, key) {
   if (!dep.has(activeEffect)) {
     dep.add(activeEffect);
   }
+  // console.log(key, targetMap);
 }
 // 触发更新
 export function trigger(target, type, key?, newValue?, oldValue?) {
   const depsMap = targetMap.get(target);
+  console.log("set", targetMap, target, depsMap);
   if (!depsMap) {
     return;
   }
@@ -86,9 +88,9 @@ export function trigger(target, type, key?, newValue?, oldValue?) {
   // 处理数组 就是key ===length
   if (key === "length" && isArray(target)) {
     const newLength = Number(newValue);
-    console.log(depsMap)
     depsMap.forEach((dep, key) => {
       // 如果更改的长度小于收集索引 重新执行effect
+      const res = key === "length" || key >= newLength;
       if (key === "length" || key >= newLength) {
         add(dep); //获取当前属性effect 触发
       }
@@ -102,7 +104,7 @@ export function trigger(target, type, key?, newValue?, oldValue?) {
     switch (type) {
       case TriggerOpTypes.ADD:
         if (isArray(target) && isIntegerKey(key)) {
-          console.log(depsMap)
+          // console.log(depsMap);
           add(depsMap.get("length")); //获取当前属性effect 触发
         }
         break;
@@ -112,5 +114,11 @@ export function trigger(target, type, key?, newValue?, oldValue?) {
     }
   }
   // 执行
-  effectSet.forEach((effect: any) => effect());
+  effectSet.forEach((effect: any) => {
+    if (effect.options.sch) {
+      effect.options.sch(effect);
+    } else {
+      effect();
+    }
+  });
 }

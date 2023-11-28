@@ -7,6 +7,7 @@ import {
   isIntegerKey,
   hasOwn,
   hasChanged,
+  isSymbol,
 } from "@vue/shared";
 import { reactive, readonly } from "./reactive";
 import { TrackOpTypes, TriggerOpTypes } from "./operations";
@@ -46,9 +47,18 @@ export const shallowReadonlyHandlers = extend(
 function createGetter(isReadonly = false, shallow = false) {
   return function get(target, key, receiver) {
     const res = Reflect.get(target, key, receiver);
+    // 现在，
+    // 整个条件判断的含义可以解释为：
+    // 如果key是Symbol类型且是内置Symbol之一，
+    // 或者key是不可追踪的键，那么直接返回res，不再进行后续的响应式处理。
+    // 这是因为这些特殊情况可能会引发一些问题，需要特殊处理或者避免。
+    if (isSymbol(key)) {
+      return res;
+    }
     if (!isReadonly) {
       // 不是只读
       //收集依赖 effect
+      // console.log("get", arguments); // 数组默认的
       Track(target, TrackOpTypes.GET, key);
     }
     if (shallow) {
@@ -68,6 +78,7 @@ function createGetter(isReadonly = false, shallow = false) {
 
 function createSetter(shallow = false) {
   return function set(target, key, value, receiver) {
+    // console.log("createSetter", JSON.parse(JSON.stringify(arguments)));
     // 触发更新
     // (1) 数组还是对象 （2） 添加值 还是修改
     // (1) 获取老值
@@ -77,6 +88,7 @@ function createSetter(shallow = false) {
       isArray(target) && isIntegerKey(key)
         ? Number(key) < target.length
         : hasOwn(target, key);
+    // debugger;
     // 设置值
     const result = Reflect.set(target, key, value, receiver);
     if (!hadkey) {
