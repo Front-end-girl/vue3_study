@@ -1,4 +1,5 @@
 // 公共的方法
+export * from "./shapeFlags"; // 判断是元素还是组件得 二进制方法 用位运算
 export function isObject(target) {
   return typeof target === "object" && target !== null;
 }
@@ -23,4 +24,5 @@ export const hasOwn = (
 export const hasChanged = (value: any, oldValue: any): boolean =>
   !Object.is(value, oldValue);
 //测试删除二次测试
-export const isSymbol = (val: unknown): val is symbol => typeof val === 'symbol'
+export const isSymbol = (val: unknown): val is symbol =>
+  typeof val === "symbol";

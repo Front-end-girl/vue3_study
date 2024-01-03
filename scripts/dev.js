@@ -14,4 +14,4 @@ async function build(target) {
     // 这样可以使子进程的输出和错误信息直接显示在父进程的控制台上。
   }); // rollup 打包 执行里面配置
 }
-build('reactivity')
+build('runtime-dom')

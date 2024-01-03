@@ -23,6 +23,7 @@ const resolve = (p) => path.resolve(packageDir, p); // 获取针对路径下的�
 
 // require 获取某个路径下的内容 resolve("package.json") 获取到该路径  因node升级 require不允许直接使用 需要使用createRequire
 const pkg = require(resolve("package.json"));
+
 console.log("pkg", pkg);
 
 const packageOptions = pkg.buildOptions || {}; // 获取打包的格式

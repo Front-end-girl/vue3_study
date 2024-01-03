@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">app</div>
+    <script src="../runtime-dom/dist/runtime-dom.global.js"></script>
+    <script>
+      const { createApp } = VueRuntimeDom;
+      let app = {
+        setup(props, context) {
+          console.log("setup", props, context);
+          return {
+            age: 10,
+          };
+        },
+        render(proxy) {
+          console.log(proxy.age);
+        },
+      };
+      createApp(app, { name: "llll" }).mount("#app");
+      // 是runtime-dom 组件写的一个createApp方法，这个方法有个mount渲染指定dom方法，
+      // 实际createApp 调用runtime-core 渲染核心的渲染方法 createRender
+      //  以节点的属性操作、对比操作封装对象 作为参数
+      // 同时这个渲染方法 暴露出 createApp 高阶函数方法 传入 根组件app、  {name: "llll" }属性
+      // createRender 的createApp方法 实现了 创建虚拟组件参数类型等等、暴露出mount方法
+      // 该方法实现了创建虚拟组件、和高阶函数传入的render函数
+
+      // createApp(app, { name: "llll" }) 则只是创建了创建虚拟节点、渲染的方法，实际实现在.mount('#app')
+      // 才创建虚拟节点、渲染dom
+    </script>
+  </body>
+</html>
